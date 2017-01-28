@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
 	Rigidbody2D rb2d;
-
+	Animator animator;
 	public float speed = 1; //Speed to move horizontally
 	public float MaxJumpTime = 2f; //Cooldown for jump
 	public float JumpForce; //Force of jump
@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour {
 
 	void Start () {
 		rb2d = GetComponent<Rigidbody2D>();
+		animator = GetComponent<Animator>();
 	}
 
 	void Update() {
@@ -35,6 +36,14 @@ public class PlayerMovement : MonoBehaviour {
 		isGrounded = Physics2D.Raycast(isGround.position, -Vector2.up, 0.1f);
 //		Debug.DrawLine(isGround.position, new Vector3 (isGround.position.x, -.5f,0), Color.red);
 //		Debug.Log (isGrounded);
+
+
+		if (movex == 0) {
+			animator.SetBool ("isIdle", true);
+		} else {
+			animator.SetBool ("isIdle", false);
+			animator.SetFloat("xvelocity",rb2d.velocity.x);
+		}
 	}
 
 }
